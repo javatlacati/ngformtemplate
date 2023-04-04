@@ -25,3 +25,26 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+Add a new package trough angular console:
+
+    ng add angular-material
+
+add a new component trough angular console:
+
+    ng generate component components/survey/SectionComponent
+
+[//]: # (set database environment to postgresql)
+
+[//]: # ()
+[//]: # (    $docker pull postgres)
+
+[//]: # ()
+[//]: # (When the download is complete, the docker run command will create a running database within a Docker container. For PostgreSQL, the POSTGRES_PASSWORD environment variable must be specified with the -e option:)
+
+[//]: # ()
+[//]: # (    $docker run -e POSTGRES_PASSWORD=password postgres)
+
+[//]: # ()
+[//]: # (Next, we'll test our database container connection.)
