@@ -31,6 +31,10 @@ Add a new package trough angular console:
 
     ng add angular-material
 
+or
+
+    ng add @angular/cdk
+
 add a new component trough angular console:
 
     ng generate component components/survey/SectionComponent
