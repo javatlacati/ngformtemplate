@@ -39,10 +39,9 @@ add a new component trough angular console:
 
     ng generate component components/survey/SectionComponent
 
-[//]: # (set database environment to postgresql)
+configurar base de datos
 
-[//]: # ()
-[//]: # (    $docker pull postgres)
+   docker pull mcr.microsoft.com/mssql/server:2022-latest
 
 [//]: # ()
 [//]: # (When the download is complete, the docker run command will create a running database within a Docker container. For PostgreSQL, the POSTGRES_PASSWORD environment variable must be specified with the -e option:)
