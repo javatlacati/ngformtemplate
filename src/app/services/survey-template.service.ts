@@ -8,12 +8,12 @@ import {SurveyTemplate} from "../model/SurveyTemplate";
 })
 export class SurveyTemplateService {
 
-  private readonly surveyTemplateUrl = 'http://localhost:8080/surveyTemplate';
+  private readonly surveyTemplateUrl = 'http://localhost:8081/template';
 
   constructor(private http: HttpClient) {}
 
   getSurveyTemplates(): Observable<SurveyTemplate[]> {
-    const url = `${this.surveyTemplateUrl}/s`;
+    const url = `${this.surveyTemplateUrl}s`;
     return this.http.get<SurveyTemplate[]>(url);
   }
 
