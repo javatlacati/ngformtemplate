@@ -1,1 +1,7 @@
 <p>survey-template-list works!</p>
+<h1>Survey Templates</h1>
+<ul>
+  <li *ngFor="let template of surveyTemplates$ | async">
+    <a [routerLink]="['/templates', template.surveyTemplateId]">{{ template.surveyTemplateId }}</a>
+  </li>
+</ul>

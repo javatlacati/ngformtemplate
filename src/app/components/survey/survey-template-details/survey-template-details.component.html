@@ -1,0 +1,13 @@
+<p>survey-template-details works!</p>
+<h1>{{ surveyTemplate?.surveyTemplateId }}</h1>
+<ul>
+  <li *ngFor="let section of surveyTemplate?.sections">
+    <h2>{{ section.name }}</h2>
+    <ul>
+      <li *ngFor="let question of section.questions">
+        <p>{{ question.type }}</p>
+        <p>{{ question.statement }}</p>
+      </li>
+    </ul>
+  </li>
+</ul>

@@ -8,12 +8,14 @@ import {SectionComponent} from "./components/survey/section-component/section.co
 import {CdkAccordionModule} from "@angular/cdk/accordion";
 import { SurveyTemplateListComponent } from './components/survey/survey-template-list/survey-template-list.component';
 import {HttpClientModule} from "@angular/common/http";
+import { SurveyTemplateDetailsComponent } from './components/survey/survey-template-details/survey-template-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SectionComponent,
-    SurveyTemplateListComponent
+    SurveyTemplateListComponent,
+    SurveyTemplateDetailsComponent
   ],
   imports: [
     BrowserModule,
