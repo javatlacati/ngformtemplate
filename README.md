@@ -52,4 +52,10 @@ configurar base de datos
 [//]: # ()
 [//]: # (Next, we'll test our database container connection.)
 
-you can build the image by running docker build -t <image name> . and then start the container by running docker run -p 4200:4200 <image name>
+you can build the image by running
+
+`docker build -t <image name> .`
+
+and then start the container by running
+
+`docker run -p 4200:4200 <image name>`
