@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
 import {ActivatedRoute} from "@angular/router";
+import {Question} from "../../../model/Question";
+import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -9,7 +11,8 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./survey-template-details.component.scss']
 })
 export class SurveyTemplateDetailsComponent implements OnInit {
-  surveyTemplate: SurveyTemplate| null = null;
+  surveyTemplate: SurveyTemplate | null = null;
+  debugMode = true
 
   constructor(
     private route: ActivatedRoute,
@@ -30,4 +33,14 @@ export class SurveyTemplateDetailsComponent implements OnInit {
       .subscribe(surveyTemplate => this.surveyTemplate = surveyTemplate);
   }
 
+  getOptions(question: Question): string[] {
+    console.log(`type: ${question.type}`)
+    if (question.type === 'MultipleOptionQuestion') {
+      let answerOptions = (question as MultipleOptionQuestion).answerOptions;
+      console.log(`answerOptions: ${answerOptions}`)
+      return answerOptions
+    } else {
+      return []
+    }
+  }
 }

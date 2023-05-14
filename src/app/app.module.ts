@@ -9,6 +9,9 @@ import {CdkAccordionModule} from "@angular/cdk/accordion";
 import { SurveyTemplateListComponent } from './components/survey/survey-template-list/survey-template-list.component';
 import {HttpClientModule} from "@angular/common/http";
 import { SurveyTemplateDetailsComponent } from './components/survey/survey-template-details/survey-template-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { SurveyTemplateDetailsComponent } from './components/survey/survey-templ
     BrowserModule,
     AppRoutingModule,
     CdkAccordionModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

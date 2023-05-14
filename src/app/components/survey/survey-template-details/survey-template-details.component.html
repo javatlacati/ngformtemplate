@@ -1,13 +1,25 @@
-<p>survey-template-details works!</p>
 <h1>{{ surveyTemplate?.surveyTemplateId }}</h1>
 <ul>
   <li *ngFor="let section of surveyTemplate?.sections">
     <h2>{{ section.name }}</h2>
-    <ul>
-      <li *ngFor="let question of section.questions">
+    <div *ngFor="let question of section.questions">
+      <div *ngIf="debugMode">
         <p>{{ question.type }}</p>
-        <p>{{ question.statement }}</p>
-      </li>
-    </ul>
+      </div>
+      <p>{{ question.statement }}</p>
+      <div [ngSwitch]="question.type">
+        <div *ngSwitchCase="'OpenQuestion'">
+          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+        </div>
+        <div *ngSwitchCase="'DateQuestion'">
+          <input type="date">
+        </div>
+        <div *ngSwitchCase="'MultipleOptionQuestion'">
+          <mat-select>
+            <mat-option *ngFor="let option of getOptions(question)" [value]="option">{{option}}</mat-option>
+          </mat-select>
+        </div>
+      </div>
+    </div>
   </li>
 </ul>
