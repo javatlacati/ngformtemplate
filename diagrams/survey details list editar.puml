@@ -1,0 +1,32 @@
+@startsalt
+'https://plantuml.com/salt
+{
+  **Modo Edición**
+  [Previsualizar <&eye>]
+  Plantilla #1
+    | - Sección 1 | [Eliminar sección]
+    | --
+    | {Título: | " Datos generales"}
+    {+
+      Nombre: | {"Natalio Reyes Colás"}
+      [X]Obligatoria
+    }|[Eliminar pregunta]
+    {+
+      Fecha: | {"20/02/2023"|<&calendar>}
+      [X]Obligatoria
+    }|[Eliminar pregunta]
+    {+
+      Sexo: | {(X) masculino|() femenino}
+      [X]Obligatoria
+     }|[Eliminar pregunta]
+'    | {T!
+'
+'        sd
+'        }
+    | [Agregar pregunta]
+    | --
+    + Sección 2
+    + Sección 3
+    [Agregar sección]
+}
+@endsalt
