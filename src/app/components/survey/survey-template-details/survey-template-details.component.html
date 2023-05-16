@@ -2,16 +2,24 @@
 <button mat-icon-button aria-label="borrar plantilla" (click)="enableEdition()">
   <mat-icon>{{editing ? 'preview' : 'edit'}}</mat-icon>
 </button>
-<p>edit:{{editing}}</p>
+<div *ngIf="debugMode">
+  <p>edit:{{editing}}</p>
+</div>
 <ul>
   <li *ngFor="let section of surveyTemplate?.sections">
     <h2>{{ section.name }}</h2>
+    <div *ngIf="editing">
+      <button mat-raised-button (click)="deleteSection(section.sectionId)">eliminar seccion</button>
+    </div>
     <div *ngFor="let question of section.questions">
       <div *ngIf="debugMode">
         <p>{{ question.type }}</p>
       </div>
       <p>{{ question.statement }}</p>
       <div [ngSwitch]="question.type">
+        <div *ngIf="editing">
+          <button mat-raised-button (click)="deleteQuestion(question.questionId)">Eliminar Pregunta</button>
+        </div>
         <div *ngSwitchCase="'OpenQuestion'">
           <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
         </div>
@@ -25,5 +33,12 @@
         </div>
       </div>
     </div>
+    <div *ngIf="editing">
+      <button mat-raised-button (click)="addQuestionToSection(section.sectionId)">Agregar Pregunta</button>
+    </div>
   </li>
+  <br>
+  <div *ngIf="editing">
+    <button mat-raised-button (click)="addSection(surveyTemplate?.surveyTemplateId)">Agregar Seccion</button>
+  </div>
 </ul>

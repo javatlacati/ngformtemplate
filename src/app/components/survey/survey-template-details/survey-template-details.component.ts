@@ -12,7 +12,7 @@ import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 })
 export class SurveyTemplateDetailsComponent implements OnInit {
   surveyTemplate: SurveyTemplate | null = null;
-  debugMode = true
+  debugMode = false
   editing = false
 
   constructor(
@@ -47,5 +47,21 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   enableEdition() {
     this.editing=!this.editing
+  }
+
+  deleteSection(sectionId: number) {
+
+  }
+
+  addQuestionToSection(sectionId: number) {
+
+  }
+
+  addSection(surveyTemplateId?: number) {
+
+  }
+
+  deleteQuestion(questionId?: number) {
+
   }
 }
