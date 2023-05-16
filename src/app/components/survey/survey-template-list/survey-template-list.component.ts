@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {Observable} from "rxjs";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
@@ -13,5 +13,9 @@ export class SurveyTemplateListComponent {
 
   constructor(private surveyTemplateService: SurveyTemplateService) {
     this.surveyTemplates$ = surveyTemplateService.getSurveyTemplates();
+  }
+
+  deleteTemplate(surveyTemplateId: number) {
+    alert(`deleting ${surveyTemplateId}`)
   }
 }
