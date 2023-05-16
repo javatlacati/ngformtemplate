@@ -1,4 +1,8 @@
 <h1>{{ surveyTemplate?.surveyTemplateId }}</h1>
+<button mat-icon-button aria-label="borrar plantilla" (click)="enableEdition()">
+  <mat-icon>{{editing ? 'preview' : 'edit'}}</mat-icon>
+</button>
+<p>edit:{{editing}}</p>
 <ul>
   <li *ngFor="let section of surveyTemplate?.sections">
     <h2>{{ section.name }}</h2>

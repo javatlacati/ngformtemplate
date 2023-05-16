@@ -13,6 +13,7 @@ import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 export class SurveyTemplateDetailsComponent implements OnInit {
   surveyTemplate: SurveyTemplate | null = null;
   debugMode = true
+  editing = false
 
   constructor(
     private route: ActivatedRoute,
@@ -42,5 +43,9 @@ export class SurveyTemplateDetailsComponent implements OnInit {
     } else {
       return []
     }
+  }
+
+  enableEdition() {
+    this.editing=!this.editing
   }
 }
