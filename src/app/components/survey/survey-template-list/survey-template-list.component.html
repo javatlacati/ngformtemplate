@@ -1,7 +1,11 @@
 <p>survey-template-list works!</p>
 <h1>Survey Templates</h1>
+<button mat-raised-button color="primary">Agregar nueva plantilla</button>
 <ul>
   <li *ngFor="let template of surveyTemplates$ | async">
     <a [routerLink]="['/templates', template.surveyTemplateId]">{{ template.surveyTemplateId }}</a>
+    <button mat-icon-button aria-label="borrar plantilla">
+      <mat-icon>delete</mat-icon>
+    </button>
   </li>
 </ul>
