@@ -46,7 +46,7 @@ export class SurveyTemplateDetailsComponent implements OnInit {
   }
 
   enableEdition() {
-    this.editing=!this.editing
+    this.editing = !this.editing
   }
 
   deleteSection(sectionId: number) {
@@ -61,7 +61,11 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   }
 
-  deleteQuestion(questionId?: number) {
+  deleteQuestion(questionId: number) {
+
+  }
+
+  editSectionName(sectionId: number) {
 
   }
 }
