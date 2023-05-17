@@ -17,5 +17,7 @@ export class SurveyTemplateListComponent {
 
   deleteTemplate(surveyTemplateId: number) {
     alert(`deleting ${surveyTemplateId}`)
+    this.surveyTemplateService.deleteSurveyTemplateById(surveyTemplateId)
+    //TODO reload
   }
 }
