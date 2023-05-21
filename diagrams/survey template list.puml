@@ -3,11 +3,12 @@
 
 salt
 {
-  Plantillas | [+]
+  Plantillas
+  [Agregar nueva plantilla]
  {
-   * __1__  | [-]
-   * __2__ | [-]
-   * __3__ | [-]
+   * __1__  | [<&trash>]
+   * __2__ | [<&trash>]
+   * __3__ | [<&trash>]
   }
 }
 @enduml
