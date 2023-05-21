@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewTemplateDialogComponent } from './new-template-dialog.component';
+import { NewSectionDialogComponent } from './new-section-dialog.component';
 
 describe('NewTemplateDialogComponent', () => {
-  let component: NewTemplateDialogComponent;
-  let fixture: ComponentFixture<NewTemplateDialogComponent>;
+  let component: NewSectionDialogComponent;
+  let fixture: ComponentFixture<NewSectionDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NewTemplateDialogComponent ]
+      declarations: [ NewSectionDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NewTemplateDialogComponent);
+    fixture = TestBed.createComponent(NewSectionDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

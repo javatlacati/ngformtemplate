@@ -13,7 +13,7 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
-import { NewTemplateDialogComponent } from './components/survey/dialogs/new-template-dialog/new-template-dialog.component';
+import { NewSectionDialogComponent } from './components/survey/dialogs/new-section-dialog/new-section-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
 
@@ -23,7 +23,7 @@ import {FormsModule} from "@angular/forms";
     SectionComponent,
     SurveyTemplateListComponent,
     SurveyTemplateDetailsComponent,
-    NewTemplateDialogComponent
+    NewSectionDialogComponent
   ],
   imports: [
     BrowserModule,
