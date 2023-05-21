@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
-import {Observable} from "rxjs";
+import {Observable, startWith, Subject, switchMap} from "rxjs";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
 import {MatDialog} from "@angular/material/dialog";
-import {NewTemplateDialogComponent} from "../dialogs/new-template-dialog/new-template-dialog.component";
 
 @Component({
   selector: 'app-survey-template-list',
@@ -11,10 +10,15 @@ import {NewTemplateDialogComponent} from "../dialogs/new-template-dialog/new-tem
   styleUrls: ['./survey-template-list.component.scss']
 })
 export class SurveyTemplateListComponent {
+  private readonly refreshSurveyTemplates$ = new Subject<void>();
   surveyTemplates$: Observable<SurveyTemplate[]>;
 
   constructor(private surveyTemplateService: SurveyTemplateService, public dialog: MatDialog) {
-    this.surveyTemplates$ = surveyTemplateService.getSurveyTemplates();
+    this.surveyTemplates$ = this.refreshSurveyTemplates$.pipe(
+      // fake emission of a click so that initial data can be loaded
+      startWith(undefined),
+      switchMap(() => this.surveyTemplateService.getSurveyTemplates())
+    )
   }
 
   deleteTemplate(surveyTemplateId: number) {
@@ -24,11 +28,20 @@ export class SurveyTemplateListComponent {
   }
 
   creaNuevaPlantilla() {
-    const dialogRef = this.dialog.open(NewTemplateDialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result', result);
-      this.surveyTemplateService.createSurvey(result['data'])
-      //TODO reload
-    });
+    // const dialogRef = this.dialog.open(NewTemplateDialogComponent);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log('The dialog was closed with result', result);
+    //   this.surveyTemplateService.createSurvey(result['data'])
+    //   //TODO reload
+    // });
+    this.surveyTemplateService.createSurvey()
+      .subscribe(value => {
+        this.surveyTemplates$ = this.refreshSurveyTemplates$.pipe(
+          // fake emission of a click so that initial data can be loaded
+          startWith(undefined),
+          switchMap(() => this.surveyTemplateService.getSurveyTemplates())
+        )
+    })
+
   }
 }
