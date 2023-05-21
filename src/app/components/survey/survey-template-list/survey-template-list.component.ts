@@ -27,6 +27,8 @@ export class SurveyTemplateListComponent {
     const dialogRef = this.dialog.open(NewTemplateDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result', result);
+      this.surveyTemplateService.createSurvey(result['data'])
+      //TODO reload
     });
   }
 }
