@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {Observable, startWith, Subject, switchMap} from "rxjs";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
@@ -9,7 +9,7 @@ import {MatDialog} from "@angular/material/dialog";
   templateUrl: './survey-template-list.component.html',
   styleUrls: ['./survey-template-list.component.scss']
 })
-export class SurveyTemplateListComponent {
+export class SurveyTemplateListComponent implements OnDestroy {
   private readonly refreshSurveyTemplates$ = new Subject<void>();
   surveyTemplates$: Observable<SurveyTemplate[]>;
 
@@ -35,9 +35,13 @@ export class SurveyTemplateListComponent {
     //   //TODO reload
     // });
     this.surveyTemplateService.createSurvey()
-      .subscribe(value => {
+      .subscribe(() => {
         this.refreshSurveyTemplates$.next()
-    })
+      })
 
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSurveyTemplates$.complete()
   }
 }
