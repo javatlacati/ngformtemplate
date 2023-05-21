@@ -29,8 +29,13 @@ export class SurveyTemplateService {
   }
 
   createSurvey() {
-    console.log("creating new survey")
     const url = `${this.surveyTemplateUrl}`;
     return this.http.post(url, "")
+  }
+
+  createSection(surveyTemplateId: number | undefined, resultElement: string) {
+    if (surveyTemplateId) {
+      console.log(`creating new section for template ${surveyTemplateId}`)
+    }
   }
 }

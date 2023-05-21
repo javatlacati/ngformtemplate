@@ -2,7 +2,6 @@ import {Component, OnDestroy} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {Observable, startWith, Subject, switchMap} from "rxjs";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
-import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-survey-template-list',
@@ -13,7 +12,7 @@ export class SurveyTemplateListComponent implements OnDestroy {
   private readonly refreshSurveyTemplates$ = new Subject<void>();
   surveyTemplates$: Observable<SurveyTemplate[]>;
 
-  constructor(private surveyTemplateService: SurveyTemplateService, public dialog: MatDialog) {
+  constructor(private surveyTemplateService: SurveyTemplateService) {
     this.surveyTemplates$ = this.refreshSurveyTemplates$.pipe(
       // fake emission of a click so that initial data can be loaded
       startWith(undefined),
@@ -28,12 +27,6 @@ export class SurveyTemplateListComponent implements OnDestroy {
   }
 
   creaNuevaPlantilla() {
-    // const dialogRef = this.dialog.open(NewTemplateDialogComponent);
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed with result', result);
-    //   this.surveyTemplateService.createSurvey(result['data'])
-    //   //TODO reload
-    // });
     this.surveyTemplateService.createSurvey()
       .subscribe(() => {
         this.refreshSurveyTemplates$.next()

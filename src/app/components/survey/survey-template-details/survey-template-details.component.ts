@@ -4,6 +4,8 @@ import {SurveyTemplateService} from "../../../services/survey-template.service";
 import {ActivatedRoute} from "@angular/router";
 import {Question} from "../../../model/Question";
 import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
+import {MatDialog} from "@angular/material/dialog";
+import {NewSectionDialogComponent} from "../dialogs/new-section-dialog/new-section-dialog.component";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -17,7 +19,8 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private surveyTemplateService: SurveyTemplateService
+    private surveyTemplateService: SurveyTemplateService,
+    public dialog: MatDialog
   ) {
 
   }
@@ -58,7 +61,12 @@ export class SurveyTemplateDetailsComponent implements OnInit {
   }
 
   addSection(surveyTemplateId?: number) {
-
+    const dialogRef = this.dialog.open(NewSectionDialogComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      this.surveyTemplateService.createSection(surveyTemplateId, result['data'])
+      //TODO reload
+    });
   }
 
   deleteQuestion(questionId: number) {
