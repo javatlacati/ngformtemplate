@@ -24,7 +24,7 @@ export class SurveyTemplateListComponent {
   deleteTemplate(surveyTemplateId: number) {
     alert(`deleting ${surveyTemplateId}`)
     this.surveyTemplateService.deleteSurveyTemplateById(surveyTemplateId)
-    //TODO reload
+    this.refreshSurveyTemplates$.next()
   }
 
   creaNuevaPlantilla() {
@@ -36,11 +36,7 @@ export class SurveyTemplateListComponent {
     // });
     this.surveyTemplateService.createSurvey()
       .subscribe(value => {
-        this.surveyTemplates$ = this.refreshSurveyTemplates$.pipe(
-          // fake emission of a click so that initial data can be loaded
-          startWith(undefined),
-          switchMap(() => this.surveyTemplateService.getSurveyTemplates())
-        )
+        this.refreshSurveyTemplates$.next()
     })
 
   }
