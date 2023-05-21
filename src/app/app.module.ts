@@ -14,13 +14,16 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import { NewTemplateDialogComponent } from './components/survey/dialogs/new-template-dialog/new-template-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
     AppComponent,
     SectionComponent,
     SurveyTemplateListComponent,
-    SurveyTemplateDetailsComponent
+    SurveyTemplateDetailsComponent,
+    NewTemplateDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

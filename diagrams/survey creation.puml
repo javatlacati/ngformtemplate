@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/salt
+(*) --> "
+{{
+  salt
+  {
+  <b> listado de plantillas
+    {+
+      Plantillas
+      [Agregar nueva plantilla]
+     {
+       * __1__  | [<&trash>]
+       * __2__ | [<&trash>]
+       * __3__ | [<&trash>]
+      }
+    }
+  }
+}}
+" as add
+add -right-> "
+{{
+  salt
+  {
+     <b> click en agregar nueva plantilla
+     {+
+     Ingrese el nombre:| "        "
+          [Procesar] |[Cancelar]
+     }
+   }
+}}
+" as dialog
+@enduml
