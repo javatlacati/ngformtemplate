@@ -27,4 +27,10 @@ export class SurveyTemplateService {
     const url = `${this.surveyTemplateUrl}/${surveyId}`;
     return this.http.delete<SurveyTemplate>(url);
   }
+
+  createSurvey() {
+    console.log("creating new survey")
+    const url = `${this.surveyTemplateUrl}`;
+    return this.http.post(url, "")
+  }
 }
