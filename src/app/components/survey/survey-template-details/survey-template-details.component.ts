@@ -3,9 +3,11 @@ import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
 import {ActivatedRoute} from "@angular/router";
 import {Question} from "../../../model/Question";
-import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 import {MatDialog} from "@angular/material/dialog";
 import {NewSectionDialogComponent} from "../dialogs/new-section-dialog/new-section-dialog.component";
+import {Section} from "../../../model/Section";
+import {QuestionType} from "../../../model/QuestionType";
+import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -38,8 +40,8 @@ export class SurveyTemplateDetailsComponent implements OnInit {
   }
 
   getOptions(question: Question): string[] {
-    console.log(`type: ${question.type}`)
-    if (question.type === 'MultipleOptionQuestion') {
+    console.log(`type: ${question.questionType}`)
+    if (question.questionType === QuestionType.MULTIPLE_OPTION) {
       let answerOptions = (question as MultipleOptionQuestion).answerOptions;
       console.log(`answerOptions: ${answerOptions}`)
       return answerOptions
@@ -60,11 +62,21 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   }
 
-  addSection(surveyTemplateId?: number) {
+  addSection() {
     const dialogRef = this.dialog.open(NewSectionDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result', result);
-      this.surveyTemplateService.createSection(surveyTemplateId, result['data'])
+      let createdSection = this.surveyTemplateService.createSection(this.surveyTemplate?.surveyTemplateId, result['data']);
+      createdSection?.subscribe((aValue: Section | null) => {
+          console.log(`ready to reload ${JSON.stringify(aValue)}`)
+          if (aValue != null) {
+            this.surveyTemplate?.sections.push(aValue)
+          }
+        }
+      )
+      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+        returned => console.log(returned)
+      )
       //TODO reload
     });
   }

@@ -16,10 +16,10 @@
     </div>
     <div *ngFor="let question of section.questions">
       <div *ngIf="debugMode">
-        <p>{{ question.type }}</p>
+        <p>{{ question.questionType }}</p>
       </div>
       <p>{{ question.statement }}</p>
-      <div [ngSwitch]="question.type">
+      <div [ngSwitch]="question.questionType">
         <div *ngIf="editing">
           <button mat-raised-button (click)="deleteQuestion(question.questionId)">Eliminar Pregunta</button>
         </div>
@@ -42,6 +42,6 @@
   </li>
   <br>
   <div *ngIf="editing">
-    <button mat-raised-button (click)="addSection(surveyTemplate?.surveyTemplateId)">Agregar Seccion</button>
+    <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
   </div>
 </ul>
