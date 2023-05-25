@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SurveyTemplate} from "../model/SurveyTemplate";
 import {Section} from "../model/Section";
@@ -31,8 +31,9 @@ export class SurveyTemplateService {
   }
 
   createSurvey() {
+    let headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
     const url = `${this.surveyTemplateUrl}`;
-    return this.http.post(url, "")
+    return this.http.post(url, new SurveyTemplate(), {headers})
   }
 
   createSection(surveyTemplateId: number | undefined, sectionName: string): Observable<Section> | null {
@@ -51,8 +52,10 @@ export class SurveyTemplateService {
 
   updateSurveyTemplate(surveyTemplate: SurveyTemplate | null) {
     if (surveyTemplate) {
-      const url = `${this.surveyTemplateUrl}`;
-      return this.http.post(url, surveyTemplate)
+      let headers = new HttpHeaders({'Content-Type': 'application/json', 'Accept': 'application/json'});
+      const url = `${this.surveyTemplateUrl}/${surveyTemplate.surveyTemplateId}`;
+      console.log(`updating ${JSON.stringify(surveyTemplate)}`)
+      return this.http.patch(url, surveyTemplate, {headers})
     } else {
       return null
     }

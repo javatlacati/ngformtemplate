@@ -1,7 +1,7 @@
 import {Question} from "./Question";
 
 export class Section {
-  sectionId: number = 0
+  sectionId: number | null = null
   name: string = ""
   questions: Question[] = []
 }

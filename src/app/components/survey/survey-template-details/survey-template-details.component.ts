@@ -8,6 +8,7 @@ import {NewSectionDialogComponent} from "../dialogs/new-section-dialog/new-secti
 import {Section} from "../../../model/Section";
 import {QuestionType} from "../../../model/QuestionType";
 import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
+import {Observable, startWith, Subject, switchMap} from "rxjs";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -19,24 +20,35 @@ export class SurveyTemplateDetailsComponent implements OnInit {
   debugMode = false
   editing = false
 
+  private readonly refreshSurveyTemplates$ = new Subject<void>();
+
+  templateObservable$: Observable<SurveyTemplate> = new Observable<SurveyTemplate>();
+
   constructor(
     private route: ActivatedRoute,
     private surveyTemplateService: SurveyTemplateService,
     public dialog: MatDialog
   ) {
+    const id = parseInt(this.route.snapshot.paramMap.get('id') || '');
+    if (id) {
+      this.getSurveyTemplateById(id);
+      this.templateObservable$ = this.refreshSurveyTemplates$.pipe(
+        startWith(undefined),
+        switchMap(() => this.surveyTemplateService.getSurveyTemplateById(id))
+      );
+    }
+    this.templateObservable$.subscribe(template => this.surveyTemplate = template)
 
   }
 
   ngOnInit() {
-    const id = parseInt(this.route.snapshot.paramMap.get('id') || '');
-    if (id) {
-      this.getSurveyTemplateById(id);
-    }
+    this.refreshSurveyTemplates$.next()
   }
 
   getSurveyTemplateById(id: number) {
-    this.surveyTemplateService.getSurveyTemplateById(id)
-      .subscribe(surveyTemplate => this.surveyTemplate = surveyTemplate);
+
+    // templateObservable
+    //   .subscribe(surveyTemplate => this.surveyTemplate = surveyTemplate);
   }
 
   getOptions(question: Question): string[] {
@@ -66,18 +78,24 @@ export class SurveyTemplateDetailsComponent implements OnInit {
     const dialogRef = this.dialog.open(NewSectionDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result', result);
-      let createdSection = this.surveyTemplateService.createSection(this.surveyTemplate?.surveyTemplateId, result['data']);
-      createdSection?.subscribe((aValue: Section | null) => {
-          console.log(`ready to reload ${JSON.stringify(aValue)}`)
-          if (aValue != null) {
-            this.surveyTemplate?.sections.push(aValue)
-          }
+      // let createdSection = this.surveyTemplateService.createSection(this.surveyTemplate?.surveyTemplateId, result['data']);
+      // createdSection?.subscribe((aValue: Section | null) => {
+      //     console.log(`ready to reload ${JSON.stringify(aValue)}`)
+      //     if (aValue != null) {
+      //       this.surveyTemplate?.sections.push(aValue)
+      //     }
+      //   }
+      // )
+      let section = new Section();
+      section.name = result.data
+      this.surveyTemplate?.sections.push(section)
+      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+        returned => {
+          console.log(JSON.stringify(returned))
+          this.refreshSurveyTemplates$.next()
         }
       )
-      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-        returned => console.log(returned)
-      )
-      //TODO reload
+
     });
   }
 
