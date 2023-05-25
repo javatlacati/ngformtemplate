@@ -79,7 +79,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   }
 
   addSection() {
-    const dialogRef = this.dialog.open(NewSectionDialogComponent);
+    const dialogRef = this.dialog.open(NewSectionDialogComponent, {data: {verbo: 'Agregar'}});
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result', result);
       let section = new Section();
@@ -100,7 +100,24 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   }
 
   editSectionName(sectionId: number | null) {
-
+    const dialogRef = this.dialog.open(NewSectionDialogComponent, {data: {verbo: 'Editar'}});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      if (this.surveyTemplate) {
+        let section = this.surveyTemplate.sections.find((value) => value.sectionId === sectionId)
+        if (section) {
+          section.name = result.data
+          let index = this.surveyTemplate.sections.findIndex((value) => value.sectionId === sectionId)
+          this.surveyTemplate.sections[index] = section
+          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+            returned => {
+              console.log(JSON.stringify(returned))
+              this.refreshSurveyTemplates$.next()
+            }
+          )
+        }
+      }
+    });
   }
 
   ngOnDestroy(): void {
