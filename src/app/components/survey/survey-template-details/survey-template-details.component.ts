@@ -66,26 +66,29 @@ export class SurveyTemplateDetailsComponent implements OnInit {
     this.editing = !this.editing
   }
 
-  deleteSection(sectionId: number) {
-
+  deleteSection(sectionId: number | null) {
+    if (this.surveyTemplate) {
+      this.surveyTemplate.sections = this.surveyTemplate.sections.filter((value) => value.sectionId != sectionId)
+      //TODO delete section from db
+      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+        returned => {
+          console.log(JSON.stringify(returned))
+          this.refreshSurveyTemplates$.next()
+        }
+      )
+    }
   }
 
-  addQuestionToSection(sectionId: number) {
+  addQuestionToSection(sectionId: number | null) {
+    if (sectionId) {
 
+    }
   }
 
   addSection() {
     const dialogRef = this.dialog.open(NewSectionDialogComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed with result', result);
-      // let createdSection = this.surveyTemplateService.createSection(this.surveyTemplate?.surveyTemplateId, result['data']);
-      // createdSection?.subscribe((aValue: Section | null) => {
-      //     console.log(`ready to reload ${JSON.stringify(aValue)}`)
-      //     if (aValue != null) {
-      //       this.surveyTemplate?.sections.push(aValue)
-      //     }
-      //   }
-      // )
       let section = new Section();
       section.name = result.data
       this.surveyTemplate?.sections.push(section)
@@ -99,11 +102,11 @@ export class SurveyTemplateDetailsComponent implements OnInit {
     });
   }
 
-  deleteQuestion(questionId: number) {
+  deleteQuestion(questionId: number | null) {
 
   }
 
-  editSectionName(sectionId: number) {
+  editSectionName(sectionId: number | null) {
 
   }
 }
