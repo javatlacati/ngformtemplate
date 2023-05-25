@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SurveyTemplate} from "../../../model/SurveyTemplate";
 import {SurveyTemplateService} from "../../../services/survey-template.service";
 import {ActivatedRoute} from "@angular/router";
@@ -15,7 +15,7 @@ import {Observable, startWith, Subject, switchMap} from "rxjs";
   templateUrl: './survey-template-details.component.html',
   styleUrls: ['./survey-template-details.component.scss']
 })
-export class SurveyTemplateDetailsComponent implements OnInit {
+export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   surveyTemplate: SurveyTemplate | null = null;
   debugMode = false
   editing = false
@@ -31,7 +31,6 @@ export class SurveyTemplateDetailsComponent implements OnInit {
   ) {
     const id = parseInt(this.route.snapshot.paramMap.get('id') || '');
     if (id) {
-      this.getSurveyTemplateById(id);
       this.templateObservable$ = this.refreshSurveyTemplates$.pipe(
         startWith(undefined),
         switchMap(() => this.surveyTemplateService.getSurveyTemplateById(id))
@@ -43,12 +42,6 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.refreshSurveyTemplates$.next()
-  }
-
-  getSurveyTemplateById(id: number) {
-
-    // templateObservable
-    //   .subscribe(surveyTemplate => this.surveyTemplate = surveyTemplate);
   }
 
   getOptions(question: Question): string[] {
@@ -108,5 +101,9 @@ export class SurveyTemplateDetailsComponent implements OnInit {
 
   editSectionName(sectionId: number | null) {
 
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSurveyTemplates$.complete()
   }
 }
