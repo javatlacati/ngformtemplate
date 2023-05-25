@@ -20,10 +20,12 @@ export class SurveyTemplateListComponent implements OnDestroy {
     )
   }
 
-  deleteTemplate(surveyTemplateId: number) {
+  deleteTemplate(surveyTemplateId: number | null) {
     alert(`deleting ${surveyTemplateId}`)
-    this.surveyTemplateService.deleteSurveyTemplateById(surveyTemplateId)
-    this.refreshSurveyTemplates$.next()
+    if (surveyTemplateId) {
+      this.surveyTemplateService.deleteSurveyTemplateById(surveyTemplateId)
+      this.refreshSurveyTemplates$.next()
+    }
   }
 
   creaNuevaPlantilla() {

@@ -9,17 +9,17 @@
   <li *ngFor="let section of surveyTemplate?.sections">
     <h2>{{ section.name }}</h2>
     <div *ngIf="editing">
-      <button mat-raised-button (click)="editSectionName(section.sectionId)">modificar nombre de seccion</button>
+      <button mat-raised-button (click)="editSectionName(section.sectionId||0)">modificar nombre de seccion</button>
     </div>
     <div *ngIf="editing">
-      <button mat-raised-button (click)="deleteSection(section.sectionId)">eliminar seccion</button>
+      <button mat-raised-button (click)="deleteSection(section.sectionId||0)">eliminar seccion</button>
     </div>
     <div *ngFor="let question of section.questions">
       <div *ngIf="debugMode">
-        <p>{{ question.type }}</p>
+        <p>{{ question.questionType }}</p>
       </div>
       <p>{{ question.statement }}</p>
-      <div [ngSwitch]="question.type">
+      <div [ngSwitch]="question.questionType">
         <div *ngIf="editing">
           <button mat-raised-button (click)="deleteQuestion(question.questionId)">Eliminar Pregunta</button>
         </div>
@@ -37,11 +37,11 @@
       </div>
     </div>
     <div *ngIf="editing">
-      <button mat-raised-button (click)="addQuestionToSection(section.sectionId)">Agregar Pregunta</button>
+      <button mat-raised-button (click)="addQuestionToSection(section.sectionId||0)">Agregar Pregunta</button>
     </div>
   </li>
   <br>
   <div *ngIf="editing">
-    <button mat-raised-button (click)="addSection(surveyTemplate?.surveyTemplateId)">Agregar Seccion</button>
+    <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
   </div>
 </ul>
