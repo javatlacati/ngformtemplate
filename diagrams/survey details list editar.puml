@@ -1,6 +1,7 @@
 @startsalt
 'https://plantuml.com/salt
 {
+!theme mimeograph
   **Modo Edición**
   [Previsualizar <&eye>]
   Plantilla #1
@@ -8,17 +9,20 @@
     | --
     | {Título: | " Datos generales"}
     {+
-      Nombre: | {"Natalio Reyes Colás"}
+      Nombre del campo: | {"Nombre:"}
       [X]Obligatoria
     }|[Eliminar pregunta]
     {+
-      Fecha: | {"20/02/2023"|<&calendar>}
+      Nombre del campo: | {"Fecha de Nacimiento:"}
       [X]Obligatoria
     }|[Eliminar pregunta]
     {+
-      Sexo: | {(X) masculino|() femenino}
+      Nombre del campo: | {"Sexo:"}
+      [Agregar opcion]
+      valor:|"masculino"|[Eliminar]
+      valor:|"femenino"|[Eliminar]
       [X]Obligatoria
-     }|[Eliminar pregunta]
+    }|[Eliminar pregunta]
 '    | {T!
 '
 '        sd
