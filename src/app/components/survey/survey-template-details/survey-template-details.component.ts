@@ -96,7 +96,21 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   }
 
   deleteQuestion(questionId: number | null) {
-
+    if (this.surveyTemplate) {
+      if (this.surveyTemplate.sections && this.surveyTemplate.sections.length) {
+        let currentSection = this.surveyTemplate.sections.find((aSection) => aSection.questions.find((aQuestion) => aQuestion.questionId === questionId))
+        if (currentSection) {
+          let filteredQuestions = currentSection.questions.filter((aQuestion) => aQuestion.questionId != questionId)
+          currentSection.questions = filteredQuestions
+          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+            returned => {
+              console.log(JSON.stringify(returned))
+              this.refreshSurveyTemplates$.next()
+            }
+          )
+        }
+      }
+    }
   }
 
   editSectionName(sectionId: number | null) {
