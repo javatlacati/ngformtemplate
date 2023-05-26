@@ -10,38 +10,57 @@
     <h2>{{ section.name }}</h2>
     <div *ngIf="editing">
       <button mat-raised-button (click)="editSectionName(section.sectionId)">modificar nombre de seccion</button>
-    </div>
-    <div *ngIf="editing">
       <button mat-raised-button (click)="deleteSection(section.sectionId)">eliminar seccion</button>
     </div>
     <div *ngFor="let question of section.questions">
       <div *ngIf="debugMode">
-        <p>{{ question.questionType }}</p>
+        <p>Tipo: {{ question.type }}</p>
       </div>
-      <p>{{ question.statement }}</p>
-      <div [ngSwitch]="question.questionType">
-        <div *ngIf="editing">
+      <div style="border: goldenrod 1px dashed" *ngIf="editing; else preview">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nombre del campo</mat-label>
+          <input matInput placeholder="Ex. Pizza" [value]="question.statement">
+        </mat-form-field>
+        <div [ngSwitch]="question.type">
+          <div *ngSwitchCase="'MULTIPLE_OPTION'">
+            <div *ngFor="let option of getOptions(question)">
+              <input [value]="option">
+              <button>eliminar opcion de respuesta</button>
+            </div>
+            <button>agregar opcion de respuesta</button>
+          </div>
+        </div>
+        <div>
+          <mat-checkbox [(ngModel)]="question.required">Requerida</mat-checkbox>
+        </div>
+        <div>
           <button mat-raised-button (click)="deleteQuestion(question.questionId)">Eliminar Pregunta</button>
         </div>
-        <div *ngSwitchCase="'OpenQuestion'">
-          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
-        </div>
-        <div *ngSwitchCase="'DateQuestion'">
-          <input type="date">
-        </div>
-        <div *ngSwitchCase="'MultipleOptionQuestion'">
-          <mat-select>
-            <mat-option *ngFor="let option of getOptions(question)" [value]="option">{{option}}</mat-option>
-          </mat-select>
+        <div>
+          <button mat-raised-button (click)="addQuestionToSection(section.sectionId)">Agregar Pregunta</button>
         </div>
       </div>
-    </div>
-    <div *ngIf="editing">
-      <button mat-raised-button (click)="addQuestionToSection(section.sectionId)">Agregar Pregunta</button>
+      <ng-template #preview>
+        <p>{{ question.statement }}</p>
+        <div [ngSwitch]="question.type">
+          <div *ngSwitchCase="'OPEN'">
+            <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+          </div>
+          <div *ngSwitchCase="'DATE'">
+            <input type="date">
+          </div>
+          <div *ngSwitchCase="'MULTIPLE_OPTION'">
+            <mat-select>
+              <mat-option *ngFor="let option of getOptions(question)" [value]="option">{{option}}</mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </ng-template>
     </div>
   </li>
-  <br>
-  <div *ngIf="editing">
-    <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
-  </div>
 </ul>
+<br>
+<div *ngIf="editing">
+  <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
+  <button mat-raised-button (click)="save()">Guardar</button>
+</div>

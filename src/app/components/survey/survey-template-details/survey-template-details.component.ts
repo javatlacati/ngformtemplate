@@ -6,7 +6,6 @@ import {Question} from "../../../model/Question";
 import {MatDialog} from "@angular/material/dialog";
 import {NewSectionDialogComponent} from "../dialogs/new-section-dialog/new-section-dialog.component";
 import {Section} from "../../../model/Section";
-import {QuestionType} from "../../../model/QuestionType";
 import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 import {Observable, startWith, Subject, switchMap} from "rxjs";
 
@@ -45,8 +44,8 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   }
 
   getOptions(question: Question): string[] {
-    console.log(`type: ${question.questionType}`)
-    if (question.questionType === QuestionType.MULTIPLE_OPTION) {
+    console.log(`type: ${question.type}`)
+    if (question.type == 'MULTIPLE_OPTION') {
       let answerOptions = (question as MultipleOptionQuestion).answerOptions;
       console.log(`answerOptions: ${answerOptions}`)
       return answerOptions
@@ -136,5 +135,14 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.refreshSurveyTemplates$.complete()
+  }
+
+  save() {
+    this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+      returned => {
+        console.log(JSON.stringify(returned))
+        this.refreshSurveyTemplates$.next()
+      }
+    )
   }
 }
