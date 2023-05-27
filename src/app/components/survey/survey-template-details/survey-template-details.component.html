@@ -17,7 +17,7 @@
         <p>Tipo: {{ question.type }}</p>
       </div>
       <div style="border: goldenrod 1px dashed" *ngIf="editing; else preview">
-        <mat-form-field class="example-full-width">
+        <mat-form-field>
           <mat-label>Nombre del campo</mat-label>
           <input matInput placeholder="Ex. Pizza" [value]="question.statement">
         </mat-form-field>
@@ -56,6 +56,9 @@
           </div>
         </div>
       </ng-template>
+    </div>
+    <div *ngIf="editing">
+      <button mat-raised-button (click)="addQuestion(section)">Agregar Pregunta</button>
     </div>
   </li>
 </ul>

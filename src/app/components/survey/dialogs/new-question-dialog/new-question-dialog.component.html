@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-title>Agregar nueva pregunta</mat-card-title>
+  <mat-card-header>
+    <mat-form-field>
+      <mat-label>Seleccione el tipo de pregunta</mat-label>
+      <mat-select [(ngModel)]="tipoPreguntaSeleccionada">
+        <mat-option *ngFor="let tipoPregunta of tiposPregunta" [value]="tipoPregunta">{{tipoPregunta}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Nombre del campo</mat-label>
+      <input matInput placeholder="Ex. Pizza" [value]="statement">
+    </mat-form-field>
+    <div [ngSwitch]="tipoPreguntaSeleccionada">
+      <div *ngSwitchCase="'MULTIPLE_OPTION'">
+        <div *ngFor="let option of options">
+          <input [value]="option">
+          <button>eliminar opcion de respuesta</button>
+        </div>
+        <button>agregar opcion de respuesta</button>
+      </div>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="required">Requerida</mat-checkbox>
+    </div>
+  </mat-card-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cerrar</button>
+    <button mat-button (click)="doAction()">Crear</button>
+  </mat-dialog-actions>
+</mat-card>

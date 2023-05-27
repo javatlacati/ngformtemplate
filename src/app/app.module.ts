@@ -19,6 +19,8 @@ import {NewSectionDialogComponent} from './components/survey/dialogs/new-section
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { NewQuestionDialogComponent } from './components/survey/dialogs/new-question-dialog/new-question-dialog.component';
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     SectionComponent,
     SurveyTemplateListComponent,
     SurveyTemplateDetailsComponent,
-    NewSectionDialogComponent
+    NewSectionDialogComponent,
+    NewQuestionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     MatIconModule,
     MatDialogModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

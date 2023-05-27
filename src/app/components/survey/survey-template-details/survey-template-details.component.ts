@@ -8,6 +8,7 @@ import {NewSectionDialogComponent} from "../dialogs/new-section-dialog/new-secti
 import {Section} from "../../../model/Section";
 import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 import {Observable, startWith, Subject, switchMap} from "rxjs";
+import {NewQuestionDialogComponent} from "../dialogs/new-question-dialog/new-question-dialog.component";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -144,5 +145,13 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
         this.refreshSurveyTemplates$.next()
       }
     )
+  }
+
+  addQuestion(section: Section) {
+    if (!section.questions) {
+      section.questions = []
+    }
+    const dialogRef = this.dialog.open(NewQuestionDialogComponent);
+    // section.questions.push(new Question())
   }
 }
