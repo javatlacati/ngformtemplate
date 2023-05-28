@@ -72,12 +72,6 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  addQuestionToSection(sectionId: number | null) {
-    if (sectionId) {
-
-    }
-  }
-
   addSection() {
     const dialogRef = this.dialog.open(NewSectionDialogComponent, {data: {verbo: 'Agregar'}});
     dialogRef.afterClosed().subscribe(result => {
@@ -152,6 +146,22 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
       section.questions = []
     }
     const dialogRef = this.dialog.open(NewQuestionDialogComponent);
-    // section.questions.push(new Question())
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result', result);
+      if (this.surveyTemplate) {
+        if (section) {
+          if (!section.questions) {
+            section.questions = []
+          }
+          section.questions.push(result.data.question)
+          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+            returned => {
+              console.log(JSON.stringify(returned))
+              this.refreshSurveyTemplates$.next()
+            }
+          )
+        }
+      }
+    });
   }
 }
