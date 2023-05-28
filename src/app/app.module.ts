@@ -19,8 +19,13 @@ import {NewSectionDialogComponent} from './components/survey/dialogs/new-section
 import {MatDialogModule} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { NewQuestionDialogComponent } from './components/survey/dialogs/new-question-dialog/new-question-dialog.component';
+import {
+  NewQuestionDialogComponent
+} from './components/survey/dialogs/new-question-dialog/new-question-dialog.component';
 import {MatCardModule} from "@angular/material/card";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -44,9 +49,12 @@ import {MatCardModule} from "@angular/material/card";
     MatDialogModule,
     FormsModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    MatDividerModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
