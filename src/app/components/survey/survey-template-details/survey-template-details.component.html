@@ -11,87 +11,86 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <ul>
-      <li *ngFor="let section of surveyTemplate?.sections">
-        <h2>{{ section.name }}</h2>
-        <div *ngIf="editing">
-          <button mat-stroked-button (click)="editSectionName(section.sectionId)" color="primary">modificar nombre de
-            seccion
-          </button>
-          <button mat-stroked-button (click)="deleteSection(section.sectionId)" color="warn">eliminar seccion</button>
+    <div *ngFor="let section of surveyTemplate?.sections">
+      <h2>{{ section.name }}</h2>
+      <div *ngIf="editing">
+        <button mat-stroked-button (click)="editSectionName(section.sectionId)" color="primary">modificar nombre de
+          seccion
+        </button>
+        <button mat-stroked-button (click)="deleteSection(section.sectionId)" color="warn">eliminar seccion</button>
+      </div>
+      <mat-divider></mat-divider>
+      <div *ngFor="let question of section.questions">
+        <div *ngIf="debugMode">
+          <p>Tipo: {{ question.type }}</p>
         </div>
-        <mat-divider></mat-divider>
-        <div *ngFor="let question of section.questions">
-          <div *ngIf="debugMode">
-            <p>Tipo: {{ question.type }}</p>
-          </div>
-          <!--      style="border: goldenrod 1px dashed"-->
-          <div *ngIf="editing; else preview">
-            <mat-form-field [style.width.%]="100">
-              <mat-label>Nombre del campo</mat-label>
-              <input matInput placeholder="Ex. Pizza" [value]="question.statement">
-            </mat-form-field>
-            <div [ngSwitch]="question.type">
-              <div *ngSwitchCase="'MULTIPLE_OPTION'">
-                <div *ngFor="let option of getOptions(question)">
-                  <input [value]="option">
-                  <button>eliminar opcion de respuesta</button>
-                </div>
-                <button>agregar opcion de respuesta</button>
+        <div *ngIf="editing; else preview" style="border: cornflowerblue 1px dashed">
+          <mat-form-field [style.width.%]="100">
+            <mat-label>Nombre del campo</mat-label>
+            <input matInput placeholder="Ex. Pizza" [value]="question.statement">
+          </mat-form-field>
+          <div [ngSwitch]="question.type">
+            <div *ngSwitchCase="'MULTIPLE_OPTION'">
+              <div *ngFor="let option of getOptions(question)">
+                <mat-form-field>
+                  <input matInput [value]="option">
+                </mat-form-field>
+                <button mat-button><mat-icon>delete</mat-icon></button>
               </div>
-            </div>
-            <div>
-              <mat-checkbox [(ngModel)]="question.required">Requerida</mat-checkbox>
-            </div>
-            <div>
-              <button mat-flat-button (click)="deleteQuestion(question.questionId)" color="warn">Eliminar Pregunta
-              </button>
+              <button mat-button color="primary" >agregar opcion de respuesta</button>
             </div>
           </div>
-          <ng-template #preview>
+          <div>
+            <mat-checkbox [(ngModel)]="question.required">Requerida</mat-checkbox>
+          </div>
+          <div>
+            <button mat-flat-button (click)="deleteQuestion(question.questionId)" color="warn">Eliminar Pregunta
+            </button>
+          </div>
+        </div>
+        <ng-template #preview>
 
-            <div [ngSwitch]="question.type">
+          <div [ngSwitch]="question.type">
 
-              <div *ngSwitchCase="'OPEN'">
-                <mat-form-field [style.width.%]="100">
-                  <mat-label>{{ question.statement }}</mat-label>
-                  <textarea matInput></textarea>
-                </mat-form-field>
-              </div>
-              <div *ngSwitchCase="'DATE'">
-                <mat-form-field [style.width.%]="100">
-                  <mat-label>{{ question.statement }}</mat-label>
-                  <input matInput [matDatepicker]="picker">
-                  <mat-hint>DD/MM/YYYY</mat-hint>
-                  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker startView="year"></mat-datepicker>
-                </mat-form-field>
-              </div>
-              <div *ngSwitchCase="'MULTIPLE_OPTION'">
-                <mat-form-field [style.width.%]="100">
-                  <mat-label>{{ question.statement }}</mat-label>
-                  <mat-select>
-                    <mat-option *ngFor="let option of getOptions(question)" [value]="option">{{option}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
+            <div *ngSwitchCase="'OPEN'">
+              <mat-form-field [style.width.%]="100">
+                <mat-label>{{ question.statement }}</mat-label>
+                <textarea matInput></textarea>
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'DATE'">
+              <mat-form-field [style.width.%]="100">
+                <mat-label>{{ question.statement }}</mat-label>
+                <input matInput [matDatepicker]="picker">
+                <mat-hint>DD/MM/AAAA</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year"></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'MULTIPLE_OPTION'">
+              <mat-form-field [style.width.%]="100">
+                <mat-label>{{ question.statement }}</mat-label>
+                <mat-select>
+                  <mat-option *ngFor="let option of getOptions(question)" [value]="option">{{option}}</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
 
-          </ng-template>
-        </div>
-        <div *ngIf="editing">
-          <button mat-flat-button (click)="addQuestion(section)" color="primary">Agregar Pregunta</button>
-          <br>
-          <br>
-        </div>
-      </li>
-    </ul>
+          </div>
+
+        </ng-template>
+      </div>
+      <div *ngIf="editing">
+        <button mat-flat-button (click)="addQuestion(section)" color="primary">Agregar Pregunta</button>
+        <br>
+        <br>
+      </div>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <div *ngIf="editing">
       <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
-      <button mat-raised-button (click)="save()" color="primary">Guardar</button>
+<!--      <button mat-raised-button (click)="save()" color="primary">Guardar</button>-->
     </div>
   </mat-card-actions>
 </mat-card>
