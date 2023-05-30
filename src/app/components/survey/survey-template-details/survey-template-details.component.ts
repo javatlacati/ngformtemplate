@@ -170,8 +170,11 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
     if (sectionId != null) {
       let theSection = this.surveyTemplate?.sections.find((section) => section.sectionId === sectionId);
       if (theSection && theSection.questions) {
-        let idx = theSection.questions.findIndex((aQuestion) => aQuestion.questionId === questionId);
-        theSection.questions.splice(idx, 1);
+        let theQuestion = theSection.questions.find((aQuestion) => aQuestion.questionId === questionId) as MultipleOptionQuestion;
+        let idx = theQuestion.answerOptions.findIndex((answer) => answer === option)
+        if (idx >= 0) {
+          theQuestion.answerOptions.splice(idx, 1);
+        }
       }
       this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
         returned => {
@@ -180,5 +183,41 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
         }
       )
     }
+  }
+
+  addAnswerOption(sectionId: number | null, questionId: number | null) {
+    if (questionId) {
+      let theSection = this.surveyTemplate?.sections.find((section) => section.sectionId === sectionId);
+      if (theSection) {
+        let theQuestion = theSection.questions.find((aQuestion) => aQuestion.questionId === questionId) as MultipleOptionQuestion;
+        theQuestion.answerOptions.push("")
+        this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+          returned => {
+            console.log(JSON.stringify(returned))
+            this.refreshSurveyTemplates$.next()
+          }
+        )
+      }
+    }
+  }
+
+  editOption(sectionId: number | null, questionId: number | null, optionIdx: number, option: string) {
+    if (questionId) {
+      let theSection = this.surveyTemplate?.sections.find((section) => section.sectionId === sectionId);
+      if (theSection) {
+        let theQuestion = theSection.questions.find((aQuestion) => aQuestion.questionId === questionId) as MultipleOptionQuestion;
+        if (theQuestion) {
+          console.log(`theQuestion.answerOptions[${optionIdx}] = ${option}`)
+          theQuestion.answerOptions[optionIdx] = option;
+        }
+      }
+    }
+
+    this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+      returned => {
+        console.log(JSON.stringify(returned))
+        this.refreshSurveyTemplates$.next()
+      }
+    )
   }
 }

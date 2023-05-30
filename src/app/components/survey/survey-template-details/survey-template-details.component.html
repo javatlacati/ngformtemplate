@@ -31,15 +31,20 @@
           </mat-form-field>
           <div [ngSwitch]="question.type">
             <div *ngSwitchCase="'MULTIPLE_OPTION'">
-              <div *ngFor="let option of getOptions(question)">
+              <div *ngFor="let option of getOptions(question); let optionIdx = index" [attr.data-index]="optionIdx">
                 <mat-form-field>
                   <input matInput [value]="option">
                 </mat-form-field>
+                <button mat-button (click)="editOption(section.sectionId,question.questionId, optionIdx,option)">
+                  <mat-icon>save</mat-icon>
+                </button>
                 <button mat-button (click)="deleteOption(section.sectionId,question.questionId, option)">
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
-              <button mat-button color="primary">agregar opcion de respuesta</button>
+              <button mat-button color="primary" (click)="addAnswerOption(section.sectionId,question.questionId)">
+                agregar opcion de respuesta
+              </button>
             </div>
           </div>
           <div>
