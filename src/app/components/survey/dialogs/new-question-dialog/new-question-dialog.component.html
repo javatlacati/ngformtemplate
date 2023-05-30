@@ -13,15 +13,6 @@
       <mat-label>Nombre del campo</mat-label>
       <input matInput placeholder="Por ejemplo nombre" [(ngModel)]="statement">
     </mat-form-field>
-    <div [ngSwitch]="tipoPreguntaSeleccionada">
-      <div *ngSwitchCase="'MULTIPLE_OPTION'">
-        <div *ngFor="let option of options">
-          <input [value]="option">
-          <button>eliminar opcion de respuesta</button>
-        </div>
-        <button>agregar opcion de respuesta</button>
-      </div>
-    </div>
     <div>
       <mat-checkbox [(ngModel)]="required">Requerida</mat-checkbox>
     </div>
