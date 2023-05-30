@@ -164,4 +164,21 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+  deleteOption(sectionId: number | null, questionId: number | null, option: string) {
+    if (sectionId != null) {
+      let theSection = this.surveyTemplate?.sections.find((section) => section.sectionId === sectionId);
+      if (theSection && theSection.questions) {
+        let idx = theSection.questions.findIndex((aQuestion) => aQuestion.questionId === questionId);
+        theSection.questions.splice(idx, 1);
+      }
+      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
+        returned => {
+          console.log(JSON.stringify(returned))
+          this.refreshSurveyTemplates$.next()
+        }
+      )
+    }
+  }
 }

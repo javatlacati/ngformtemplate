@@ -35,9 +35,11 @@
                 <mat-form-field>
                   <input matInput [value]="option">
                 </mat-form-field>
-                <button mat-button><mat-icon>delete</mat-icon></button>
+                <button mat-button (click)="deleteOption(section.sectionId,question.questionId, option)">
+                  <mat-icon>delete</mat-icon>
+                </button>
               </div>
-              <button mat-button color="primary" >agregar opcion de respuesta</button>
+              <button mat-button color="primary">agregar opcion de respuesta</button>
             </div>
           </div>
           <div>
@@ -90,7 +92,7 @@
   <mat-card-actions>
     <div *ngIf="editing">
       <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
-<!--      <button mat-raised-button (click)="save()" color="primary">Guardar</button>-->
+      <!--      <button mat-raised-button (click)="save()" color="primary">Guardar</button>-->
     </div>
   </mat-card-actions>
 </mat-card>
