@@ -14,8 +14,6 @@ export class NewQuestionDialogComponent {
   statement: string = "";
   required: boolean = false;
   tipoPreguntaSeleccionada: string = 'OPEN';
-  options: string[] = [];
-
 
   constructor(public dialogRef: MatDialogRef<NewSectionDialogComponent>) {
   }
@@ -26,7 +24,7 @@ export class NewQuestionDialogComponent {
     question.required = this.required;
     question.type = this.tipoPreguntaSeleccionada;
     if (this.tipoPreguntaSeleccionada === 'MULTIPLE_OPTION') {
-      (question as MultipleOptionQuestion).answerOptions = this.options;
+      (question as MultipleOptionQuestion).answerOptions = [];
     }
     this.dialogRef.close({event: 'new template', data: {question: question}});
   }
