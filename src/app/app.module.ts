@@ -25,7 +25,12 @@ import {
 import {MatCardModule} from "@angular/material/card";
 import {MatDividerModule} from "@angular/material/divider";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatLineModule, MatNativeDateModule} from "@angular/material/core";
+import {
+  TemplateShareBottomSheetComponent
+} from './components/survey/bottom-sheets/template-share-bottom-sheet/template-share-bottom-sheet.component';
+import {MatListModule} from "@angular/material/list";
+import {MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, MatBottomSheetModule} from "@angular/material/bottom-sheet";
 
 @NgModule({
   declarations: [
@@ -34,7 +39,8 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
     SurveyTemplateListComponent,
     SurveyTemplateDetailsComponent,
     NewSectionDialogComponent,
-    NewQuestionDialogComponent
+    NewQuestionDialogComponent,
+    TemplateShareBottomSheetComponent
   ],
   imports: [
     BrowserModule,
@@ -52,9 +58,15 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
     MatCardModule,
     MatDividerModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule,
+    MatBottomSheetModule,
+    MatLineModule
   ],
-  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}],
+  providers: [{provide: MAT_DATE_LOCALE, useValue: 'es-MX'}, {
+    provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS,
+    useValue: {ariaModal: false}
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

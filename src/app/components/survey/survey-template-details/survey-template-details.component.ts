@@ -9,6 +9,10 @@ import {Section} from "../../../model/Section";
 import {MultipleOptionQuestion} from "../../../model/MultipleOptionQuestion";
 import {Observable, startWith, Subject, switchMap} from "rxjs";
 import {NewQuestionDialogComponent} from "../dialogs/new-question-dialog/new-question-dialog.component";
+import {MatBottomSheet} from "@angular/material/bottom-sheet";
+import {
+  TemplateShareBottomSheetComponent
+} from "../bottom-sheets/template-share-bottom-sheet/template-share-bottom-sheet.component";
 
 @Component({
   selector: 'app-survey-template-details',
@@ -27,7 +31,8 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private surveyTemplateService: SurveyTemplateService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet
   ) {
     const id = parseInt(this.route.snapshot.paramMap.get('id') || '');
     if (id) {
@@ -178,5 +183,11 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
     }
 
     this.updatedTemplateAndRefresh()
+  }
+
+  shareTemplate() {
+    this._bottomSheet.open(TemplateShareBottomSheetComponent, {
+      data: {uuid: this.surveyTemplate?.uuid}
+    });
   }
 }

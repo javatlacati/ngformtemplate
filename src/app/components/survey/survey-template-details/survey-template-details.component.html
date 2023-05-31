@@ -6,6 +6,7 @@
         <mat-icon>{{editing ? 'preview' : 'edit'}}</mat-icon>
       </button>
       <div *ngIf="debugMode">
+        <p>UUID:{{surveyTemplate?.uuid}}</p>
         <p>edit:{{editing}}</p>
       </div>
     </mat-card-subtitle>
@@ -99,5 +100,8 @@
       <button mat-raised-button (click)="addSection()">Agregar Seccion</button>
       <!--      <button mat-raised-button (click)="save()" color="primary">Guardar</button>-->
     </div>
+    <button mat-button (click)="shareTemplate()">
+      <mat-icon>link</mat-icon>
+    </button>
   </mat-card-actions>
 </mat-card>
