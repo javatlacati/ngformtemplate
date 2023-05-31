@@ -47,9 +47,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   getOptions(question: Question): string[] {
     console.log(`type: ${question.type}`)
     if (question.type == 'MULTIPLE_OPTION') {
-      let answerOptions = (question as MultipleOptionQuestion).answerOptions;
-      console.log(`answerOptions: ${answerOptions}`)
-      return answerOptions
+      return (question as MultipleOptionQuestion).answerOptions
     } else {
       return []
     }
@@ -62,13 +60,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   deleteSection(sectionId: number | null) {
     if (this.surveyTemplate) {
       this.surveyTemplate.sections = this.surveyTemplate.sections.filter((value) => value.sectionId != sectionId)
-      //TODO delete section from db
-      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-        returned => {
-          console.log(JSON.stringify(returned))
-          this.refreshSurveyTemplates$.next()
-        }
-      )
+      this.updatedTemplateAndRefresh();
     }
   }
 
@@ -79,13 +71,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
       let section = new Section();
       section.name = result.data
       this.surveyTemplate?.sections.push(section)
-      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-        returned => {
-          console.log(JSON.stringify(returned))
-          this.refreshSurveyTemplates$.next()
-        }
-      )
-
+      this.updatedTemplateAndRefresh()
     });
   }
 
@@ -94,14 +80,8 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
       if (this.surveyTemplate.sections && this.surveyTemplate.sections.length) {
         let currentSection = this.surveyTemplate.sections.find((aSection) => aSection.questions.find((aQuestion) => aQuestion.questionId === questionId))
         if (currentSection) {
-          let filteredQuestions = currentSection.questions.filter((aQuestion) => aQuestion.questionId != questionId)
-          currentSection.questions = filteredQuestions
-          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-            returned => {
-              console.log(JSON.stringify(returned))
-              this.refreshSurveyTemplates$.next()
-            }
-          )
+          currentSection.questions = currentSection.questions.filter((aQuestion) => aQuestion.questionId != questionId)
+          this.updatedTemplateAndRefresh()
         }
       }
     }
@@ -117,12 +97,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
           section.name = result.data
           let index = this.surveyTemplate.sections.findIndex((value) => value.sectionId === sectionId)
           this.surveyTemplate.sections[index] = section
-          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-            returned => {
-              console.log(JSON.stringify(returned))
-              this.refreshSurveyTemplates$.next()
-            }
-          )
+          this.updatedTemplateAndRefresh()
         }
       }
     });
@@ -132,7 +107,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
     this.refreshSurveyTemplates$.complete()
   }
 
-  save() {
+  updatedTemplateAndRefresh() {
     this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
       returned => {
         console.log(JSON.stringify(returned))
@@ -154,12 +129,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
             section.questions = []
           }
           section.questions.push(result.data.question)
-          this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-            returned => {
-              console.log(JSON.stringify(returned))
-              this.refreshSurveyTemplates$.next()
-            }
-          )
+          this.updatedTemplateAndRefresh()
         }
       }
     });
@@ -176,12 +146,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
           theQuestion.answerOptions.splice(idx, 1);
         }
       }
-      this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-        returned => {
-          console.log(JSON.stringify(returned))
-          this.refreshSurveyTemplates$.next()
-        }
-      )
+      this.updatedTemplateAndRefresh()
     }
   }
 
@@ -191,33 +156,27 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
       if (theSection) {
         let theQuestion = theSection.questions.find((aQuestion) => aQuestion.questionId === questionId) as MultipleOptionQuestion;
         theQuestion.answerOptions.push("")
-        this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-          returned => {
-            console.log(JSON.stringify(returned))
-            this.refreshSurveyTemplates$.next()
-          }
-        )
+        this.updatedTemplateAndRefresh()
       }
     }
   }
 
-  editOption(sectionId: number | null, questionId: number | null, optionIdx: number, option: string) {
+  editOption(sectionId: number | null, questionId: number | null, optionIdx: number) {
     if (questionId) {
       let theSection = this.surveyTemplate?.sections.find((section) => section.sectionId === sectionId);
       if (theSection) {
         let theQuestion = theSection.questions.find((aQuestion) => aQuestion.questionId === questionId) as MultipleOptionQuestion;
         if (theQuestion) {
+          console.log(`selector "#id_${questionId}_${optionIdx}"`)
+          let option = document.querySelector("#id_" + questionId + "_" + optionIdx) as HTMLInputElement;
           console.log(`theQuestion.answerOptions[${optionIdx}] = ${option}`)
-          theQuestion.answerOptions[optionIdx] = option;
+          if (option) {
+            theQuestion.answerOptions[optionIdx] = option.value;
+          }
         }
       }
     }
 
-    this.surveyTemplateService.updateSurveyTemplate(this.surveyTemplate)?.subscribe(
-      returned => {
-        console.log(JSON.stringify(returned))
-        this.refreshSurveyTemplates$.next()
-      }
-    )
+    this.updatedTemplateAndRefresh()
   }
 }

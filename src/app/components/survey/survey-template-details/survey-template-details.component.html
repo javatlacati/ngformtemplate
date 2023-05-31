@@ -33,9 +33,9 @@
             <div *ngSwitchCase="'MULTIPLE_OPTION'">
               <div *ngFor="let option of getOptions(question); let optionIdx = index" [attr.data-index]="optionIdx">
                 <mat-form-field>
-                  <input matInput [value]="option">
+                  <input id="id_{{question.questionId}}_{{optionIdx}}" matInput [value]="option">
                 </mat-form-field>
-                <button mat-button (click)="editOption(section.sectionId,question.questionId, optionIdx,option)">
+                <button mat-button (click)="editOption(section.sectionId,question.questionId, optionIdx)">
                   <mat-icon>save</mat-icon>
                 </button>
                 <button mat-button (click)="deleteOption(section.sectionId,question.questionId, option)">
@@ -48,7 +48,7 @@
             </div>
           </div>
           <div>
-            <mat-checkbox [(ngModel)]="question.required">Requerida</mat-checkbox>
+            <mat-checkbox name="required" [(ngModel)]="question.required">Requerida</mat-checkbox>
           </div>
           <div>
             <button mat-flat-button (click)="deleteQuestion(question.questionId)" color="warn">Eliminar Pregunta
