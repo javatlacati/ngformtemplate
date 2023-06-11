@@ -4,6 +4,10 @@
 
 .editorconfig
 
+.idea
+
+.vscode
+
 /node_modules
 
 /e2e
