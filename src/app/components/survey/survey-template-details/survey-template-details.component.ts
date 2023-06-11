@@ -50,7 +50,7 @@ export class SurveyTemplateDetailsComponent implements OnInit, OnDestroy {
   }
 
   getOptions(question: Question): string[] {
-    console.log(`type: ${question.type}`)
+    // console.log(`type: ${question.type}`)
     if (question.type == 'MULTIPLE_OPTION') {
       return (question as MultipleOptionQuestion).answerOptions
     } else {
