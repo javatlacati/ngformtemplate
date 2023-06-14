@@ -17,6 +17,6 @@ export class TemplateShareBottomSheetComponent {
     this._bottomSheetRef.dismiss();
     event.preventDefault();
     let correo = window.prompt("correo al que desea compartir la encuesta")
-    window.location.href = `mailto:${correo}?Subject=Encuesta&body=liga:  %0Dhttp://localhost:4201/survey/${this.data.uuid}/`
+    window.location.href = `mailto:${correo}?Subject=Encuesta&body=liga:  %0Dhttp://localhost:4201/#/survey/${this.data.uuid}/`
   }
 }
