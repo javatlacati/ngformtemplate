@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from "@angular/material/bottom-sheet";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-template-share-bottom-sheet',
@@ -17,6 +18,8 @@ export class TemplateShareBottomSheetComponent {
     this._bottomSheetRef.dismiss();
     event.preventDefault();
     let correo = window.prompt("correo al que desea compartir la encuesta")
-    window.location.href = `mailto:${correo}?Subject=Encuesta&body=liga:  %0Dhttp://localhost:4201/#/survey/${this.data.uuid}/`
+    window.location.href = `mailto:${correo}?Subject=Encuesta&body=liga:  %0D${environment.surveyFrontendURL}/survey/${this.data.uuid}/`
   }
+
+  protected readonly environment = environment;
 }
